@@ -1,13 +1,11 @@
 package com.restapi.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -36,7 +34,8 @@ public class User {
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private List<Role> roles = new ArrayList<Role>();
+    @JsonIgnore
+    private List<Role> roles = new ArrayList<>();
 
     public User(String password, String firstname, String lastname, String username) {
         this.firstname = firstname;
@@ -47,9 +46,5 @@ public class User {
 
     public User() {
 
-    }
-
-    public Collection<? extends GrantedAuthority> getRole() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 }
