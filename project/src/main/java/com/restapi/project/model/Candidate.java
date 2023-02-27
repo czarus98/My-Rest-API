@@ -25,8 +25,8 @@ public class Candidate {
     private String lastname;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "users_roles",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private List<Role> roles = new ArrayList<Role>();
+    @JoinTable(name = "candidates_jobs",
+            joinColumns = {@JoinColumn(name = "candidate_id")},
+            inverseJoinColumns = {@JoinColumn(name = "job_id")})
+    private List<JobPosition> jobPositions = new ArrayList<>();
 }
