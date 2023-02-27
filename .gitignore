@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 /project/src/main/resources/application.properties
+/project/src/main/java/com/restapi/project/configuration/SecurityConstants.java
 
 ### STS ###
 .apt_generated
