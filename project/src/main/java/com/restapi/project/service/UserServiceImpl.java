@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByUsernameEquals(registrationDto.getUsername())) {
             throw new ResourceAlreadyExistsError("User " + registrationDto.getUsername() + " already exists");
         }
-        if (registrationDto.getFirstname() == null || registrationDto.getLastname() == null ||  registrationDto.getUsername() == null || registrationDto.getPassword() == null) {
+        if (registrationDto.getFirstname() == null || registrationDto.getLastname() == null || registrationDto.getUsername() == null || registrationDto.getPassword() == null) {
             throw new IllegalArgumentException();
         }
         user.setFirstname(registrationDto.getFirstname());

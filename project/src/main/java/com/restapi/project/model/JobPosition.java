@@ -1,5 +1,6 @@
 package com.restapi.project.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,5 +26,10 @@ public class JobPosition {
     private String description;
 
     @ManyToMany(mappedBy = "jobPositions")
+    @Getter(AccessLevel.NONE)
     private List<Candidate> candidates = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "skillsNeededForJob")
+    @Getter(AccessLevel.NONE)
+    private List<Skill> skills = new ArrayList<>();
 }
