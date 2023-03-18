@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JobPositionRepository extends JpaRepository<JobPosition, Long> {
+    JobPosition findByJobPositionId(Long id);
 }

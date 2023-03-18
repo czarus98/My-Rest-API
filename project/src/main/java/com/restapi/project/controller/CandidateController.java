@@ -16,10 +16,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/api")
 public class CandidateController {
+    Logger logger = LoggerFactory.getLogger(CandidateController.class);
     @Autowired
     private CandidateServiceImpl candidateService;
-
-    Logger logger = LoggerFactory.getLogger(CandidateController.class);
 
     @RequestMapping(value = "/candidates", method = RequestMethod.GET)
     @ResponseBody
@@ -37,6 +36,7 @@ public class CandidateController {
         try {
             return new ResponseEntity<>(candidateService.getCandidate(id), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
+            logger.info(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -55,13 +55,25 @@ public class CandidateController {
 
     @RequestMapping(value = "/candidates/{ID}", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<String> updateCandidate(@PathVariable("ID") Long id, @RequestBody CandidateDto candidateDto) {
-        return null; // TO DO
+    public ResponseEntity<String> updateCandidate(@PathVariable("ID") Long id, @RequestBody CandidateDto newCandidate) {
+        try {
+            candidateService.putCandidate(newCandidate, id);
+            return new ResponseEntity<>("{ \"message\" : \"Method \"PUT\" completed successfully\" } ", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(value = "/candidates/{ID}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity<String> removeCandidate(@PathVariable("ID") Long id) {
-        return null; // TO DO
+    public ResponseEntity<String> deleteCandidate(@PathVariable("ID") Long id) {
+        try {
+            candidateService.removeCandidate(id);
+            return new ResponseEntity<>("{ \"message\" : \"Candidate deleted succesfully\" } ", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

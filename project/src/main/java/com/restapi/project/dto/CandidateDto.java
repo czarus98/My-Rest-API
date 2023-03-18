@@ -42,4 +42,11 @@ public class CandidateDto {
         this.jobPositions = jobPositions;
         this.skills = skills;
     }
+
+    public CandidateDto(String firstname, String lastname, String jobTitle, String email) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.jobTitle = jobTitle;
+        this.email = email;
+    }
 }

@@ -1,16 +1,18 @@
 package com.restapi.project.model;
 
-import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "job_position", schema = "public")
 public class JobPosition {
 
@@ -26,10 +28,19 @@ public class JobPosition {
     private String description;
 
     @ManyToMany(mappedBy = "jobPositions")
-    @Getter(AccessLevel.NONE)
-    private List<Candidate> candidates = new ArrayList<>();
+    private List<Candidate> candidates;
 
     @ManyToMany(mappedBy = "skillsNeededForJob")
-    @Getter(AccessLevel.NONE)
-    private List<Skill> skills = new ArrayList<>();
+    private Set<Skill> skills = new HashSet<>();
+
+    public JobPosition(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
+    public JobPosition(String title, String description, Set<Skill> skills) {
+        this.title = title;
+        this.description = description;
+        this.skills = skills;
+    }
 }

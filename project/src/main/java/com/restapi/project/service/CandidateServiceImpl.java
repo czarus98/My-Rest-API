@@ -66,7 +66,6 @@ public class CandidateServiceImpl implements CandidateService {
             } catch (Exception exception) {
                 throw new Exception("Error while saving candidate information: " + exception.getMessage());
             }
-
             for (Skill skill : newCandidate.getSkills()) {
                 Skill skillToAdd = skillService.findBySkillName(skill.getName());
                 if (skillToAdd != null) {
@@ -78,6 +77,33 @@ public class CandidateServiceImpl implements CandidateService {
                     skillService.saveSkill(newSkill);
                 }
             }
+        }
+    }
+
+    public void removeCandidate(Long id) {
+        Candidate candidate = candidateRepository.findByCandidateId(id);
+        if (candidate != null) {
+            List<SkillDto> skillsDto = skillService.getAllSkills();
+            Skill skill;
+            for (SkillDto skillDto : skillsDto) {
+                skill = skillService.findBySkillName(skillDto.getName());
+                skill.getCandidatesSkills().remove(candidate);
+            }
+            candidateRepository.delete(candidate);
+        }
+    }
+
+    @Override
+    public void putCandidate(CandidateDto newCandidate, Long id) throws Exception {
+        Candidate candidate = candidateRepository.findByCandidateId(id);
+        if (candidate != null) {
+            candidate.setEmail(newCandidate.getEmail());
+            candidate.setFirstname(newCandidate.getFirstname());
+            candidate.setLastname(newCandidate.getLastname());
+            candidate.setJobTitle(newCandidate.getJobTitle());
+            candidateRepository.save(candidate);
+        } else {
+            createCandidate(newCandidate);
         }
     }
 }
