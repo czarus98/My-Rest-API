@@ -17,4 +17,9 @@ public class SkillDto {
     public SkillDto(String skillName) {
         this.name = skillName;
     }
+
+    public SkillDto(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

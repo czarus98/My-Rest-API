@@ -30,11 +30,12 @@ public class JobPositionDto {
         this.description = description;
     }
 
-    public JobPositionDto(String title, Long id, String description, List<CandidateDto> candidates) {
+
+    public JobPositionDto(String title, Long id, Set<SkillDto> skills, String description, List<CandidateDto> candidates) {
         this.title = title;
         this.id = id;
+        this.skills = skills;
         this.description = description;
         this.candidates = candidates;
     }
-
 }

@@ -12,4 +12,5 @@ public interface SkillService {
 
     List<SkillDto> getAllSkills();
 
+    SkillDto getSkill(Long id);
 }

@@ -56,13 +56,25 @@ public class JobPositionController {
 
     @RequestMapping(value = "/positions/{ID}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity<String> removePosition(@PathVariable("ID") Long id) {
-        return null; // TO DO
+    public ResponseEntity<String> deletePosition(@PathVariable("ID") Long id) {
+        try {
+            jobPositionService.removePosition(id);
+            return new ResponseEntity<>("{ \"message\" : \"Position deleted succesfully\" } ", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(value = "/positions/{ID}", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<String> updatePosition(@PathVariable("ID") Long id, @RequestBody JobPositionDto jobPositionDto) {
-        return null; // TO DO
+    public ResponseEntity<String> putPosition(@PathVariable("ID") Long id, @RequestBody JobPositionDto jobPositionDto) {
+        try {
+            jobPositionService.replacePosition(jobPositionDto, id);
+            return new ResponseEntity<>("{ \"message\" : \"Method \"PUT\" completed successfully\" } ", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

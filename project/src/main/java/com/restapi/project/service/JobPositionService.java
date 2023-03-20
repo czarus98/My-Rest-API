@@ -10,4 +10,8 @@ public interface JobPositionService {
     JobPositionDto getPosition(Long id);
 
     void createPosition(JobPositionDto jobPositionDto) throws Exception;
+
+    void removePosition(Long id);
+
+    void replacePosition(JobPositionDto jobPositionDto, Long id) throws Exception;
 }

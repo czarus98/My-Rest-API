@@ -2,6 +2,7 @@ package com.restapi.project.service;
 
 import com.restapi.project.dto.CandidateDto;
 import com.restapi.project.dto.JobPositionDto;
+import com.restapi.project.dto.SkillDto;
 import com.restapi.project.model.JobPosition;
 import com.restapi.project.model.Skill;
 import com.restapi.project.repository.JobPositionRepository;
@@ -27,7 +28,8 @@ public class JobPositionServiceImpl implements JobPositionService {
     public List<JobPositionDto> getAllJobs() {
         return jobPositionRepository.findAll()
                 .stream()
-                .map(jobPosition -> new JobPositionDto(jobPosition.getTitle(), jobPosition.getJobPositionId(), jobPosition.getDescription(), jobPosition.getCandidates().stream().map(candidate -> new CandidateDto(candidate.getFirstname(), candidate.getLastname(), candidate.getEmail(), candidate.getJobTitle())).collect(Collectors.toList())))
+                .map(jobPosition -> new JobPositionDto(jobPosition.getTitle(), jobPosition.getJobPositionId(), jobPosition.getSkills().stream().map(skill -> new SkillDto(skill.getSkillId(), skill.getName())).collect(Collectors.toSet()), jobPosition.getDescription(),
+                        jobPosition.getCandidates().stream().map(candidate -> new CandidateDto(candidate.getFirstname(), candidate.getLastname(), candidate.getEmail(), candidate.getJobTitle())).collect(Collectors.toList())))
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +37,7 @@ public class JobPositionServiceImpl implements JobPositionService {
     public JobPositionDto getPosition(Long id) {
         JobPosition jobPosition = jobPositionRepository.findByJobPositionId(id);
         if (jobPosition != null) {
-            return new JobPositionDto(jobPosition.getTitle(), jobPosition.getJobPositionId(), jobPosition.getDescription(), jobPosition.getCandidates().stream().map(candidate -> new CandidateDto(candidate.getFirstname(), candidate.getLastname(), candidate.getEmail(), candidate.getJobTitle())).collect(Collectors.toList()));
+            return new JobPositionDto(jobPosition.getTitle(), jobPosition.getJobPositionId(), jobPosition.getSkills().stream().map(skill -> new SkillDto(skill.getSkillId(), skill.getName())).collect(Collectors.toSet()), jobPosition.getDescription(), jobPosition.getCandidates().stream().map(candidate -> new CandidateDto(candidate.getFirstname(), candidate.getLastname(), candidate.getEmail(), candidate.getJobTitle())).collect(Collectors.toList()));
         }
         throw new ResourceNotFoundException();
     }
@@ -70,6 +72,32 @@ public class JobPositionServiceImpl implements JobPositionService {
                     skillService.saveSkill(newSkill);
                 }
             }
+        }
+    }
+
+    @Override
+    public void removePosition(Long id) {
+        JobPosition jobPosition = jobPositionRepository.findByJobPositionId(id);
+        if (jobPosition != null) {
+            List<SkillDto> skillsDto = skillService.getAllSkills();
+            Skill skill;
+            for (SkillDto skillDto : skillsDto) {
+                skill = skillService.findBySkillName(skillDto.getName());
+                skill.getSkillsNeededForJob().remove(jobPosition);
+            }
+            jobPositionRepository.delete(jobPosition);
+        }
+    }
+
+    @Override
+    public void replacePosition(JobPositionDto jobPositionDto, Long id) throws Exception {
+        JobPosition jobPosition = jobPositionRepository.findByJobPositionId(id);
+        if (jobPosition != null) {
+            jobPosition.setTitle(jobPositionDto.getTitle());
+            jobPosition.setDescription(jobPositionDto.getDescription());
+            jobPositionRepository.save(jobPosition);
+        } else {
+            createPosition(jobPositionDto);
         }
     }
 }
