@@ -1,9 +1,7 @@
 package com.restapi.project.service;
 
-import com.restapi.project.dto.CandidateDto;
-import com.restapi.project.dto.JobPositionDto;
 import com.restapi.project.dto.SkillDto;
-import com.restapi.project.model.JobPosition;
+import com.restapi.project.exception.ResourceAlreadyExistsError;
 import com.restapi.project.model.Skill;
 import com.restapi.project.repository.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +43,32 @@ public class SkillServiceImpl implements SkillService {
             return new SkillDto(skill.get().getSkillId(), skill.get().getName());
         }
         throw new ResourceNotFoundException();
+    }
+
+    @Override
+    public void createSkill(SkillDto skillDto) throws Exception {
+        if (skillRepository.existsByName(skillDto.getName())) {
+            throw new ResourceAlreadyExistsError("Skill " + skillDto.getName() + " already exists");
+        }
+        Skill newSkill = new Skill(skillDto.getName());
+        try {
+            skillRepository.save(newSkill);
+        } catch (Exception exception) {
+            throw new Exception("Error while saving skill information: " + exception.getMessage());
+        }
+    }
+
+    @Override
+    public void removeSkill(Long id) throws Exception {
+        Optional<Skill> skill = skillRepository.findById(id);
+        if (skill.isPresent()) {
+            try {
+                skillRepository.delete(skill.get());
+            } catch (Exception exception) {
+                throw new Exception("Error while deleting skill " + exception.getMessage());
+            }
+        } else {
+            throw new ResourceNotFoundException("Resource not found");
+        }
     }
 }

@@ -1,8 +1,7 @@
 package com.restapi.project.controller;
 
 import com.restapi.project.dto.SkillDto;
-import com.restapi.project.model.Skill;
-import com.restapi.project.service.JobPositionService;
+import com.restapi.project.exception.ResourceAlreadyExistsError;
 import com.restapi.project.service.SkillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,19 +45,36 @@ public class SkillController {
 
     @RequestMapping(value = "/skills", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> createPosition(@RequestBody SkillDto skillDto) {
-        return null; // TO DO
+    public ResponseEntity<String> postSkill(@RequestBody SkillDto skillDto) {
+        try {
+            skillService.createSkill(skillDto);
+            return new ResponseEntity<>("{ \"message\" : \"Skill created succesfully\" } ", HttpStatus.OK);
+        } catch (ResourceAlreadyExistsError alreadyExistsError) {
+            alreadyExistsError.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(value = "/skills/{ID}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity<String> removePosition(@PathVariable("ID") Long id) {
-        return null; // TO DO
+    public ResponseEntity<String> deleteSkill(@PathVariable("ID") Long id) {
+        try {
+            skillService.removeSkill(id);
+            return new ResponseEntity<>("{ \"message\" : \"Skill deleted succesfully\" } ", HttpStatus.OK);
+        } catch (ResourceNotFoundException resourceNotFoundException) {
+            return new ResponseEntity<>("{ \"message\" : \"Skill not found\" } ", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(value = "/skills/{ID}", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<String> updatePosition(@PathVariable("ID") Long id, @RequestBody SkillDto skillDto) {
+    public ResponseEntity<String> putSkill(@PathVariable("ID") Long id, @RequestBody SkillDto skillDto) {
         return null; // TO DO
     }
 }

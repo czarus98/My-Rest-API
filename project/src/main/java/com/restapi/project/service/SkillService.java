@@ -13,4 +13,8 @@ public interface SkillService {
     List<SkillDto> getAllSkills();
 
     SkillDto getSkill(Long id);
+
+    void createSkill(SkillDto skillDto) throws Exception;
+
+    void removeSkill(Long id) throws Exception;
 }
