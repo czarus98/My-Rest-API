@@ -54,6 +54,21 @@ public class JobPositionController {
         }
     }
 
+    @RequestMapping(value = "/positions/{ID}", method = RequestMethod.PATCH) // TESTED
+    @ResponseBody
+    public ResponseEntity<String> patchPosition(@RequestBody JobPositionDto jobPositionDto, @PathVariable("ID") Long id) {
+        try {
+            jobPositionService.patchPosition(jobPositionDto, id);
+            return new ResponseEntity<>("{ \"message\" : \"Job position patched succesfully\" } ", HttpStatus.OK);
+        } catch (ResourceNotFoundException resourceNotFoundException) {
+            return new ResponseEntity<>("{ \"message\" : \"Job position not found\" } ", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @RequestMapping(value = "/positions/{ID}", method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<String> deletePosition(@PathVariable("ID") Long id) {

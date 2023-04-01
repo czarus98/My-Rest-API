@@ -1,0 +1,57 @@
+POST job position without skill
+
+{
+  "title": "data engineer",
+  "description": "we are looking for data engineer"
+}
+
+POST job position with skills
+
+{
+  "title": "data engineer",
+  "description": "we are looking for data engineer2",
+  "skills": [
+    {
+      "name": "data"
+    },
+    {
+      "name": "data1"
+    }
+  ]
+}
+
+//PATCH job position with candidates, without skills
+
+{
+"title": "data engineer2",
+"description": "we are looking for data engineer222",
+"candidates": [
+{
+"firstname": "czarek",
+"lastname": "wojcik",
+"title": "data engineer",
+"email": "czaro444"
+},
+{
+"firstname": "czarek",
+"lastname": "wojcik",
+"title": "data engineer",
+"email": "czaro2222"
+}
+]
+}
+
+//PATCH job position with skills, without candidates
+
+{
+"title": "data engineer2",
+"description": "we are looking for data engineer222",
+"skills": [
+{
+"name": "data2"
+},
+{
+"name": "data3"
+}
+]
+}

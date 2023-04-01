@@ -37,12 +37,10 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public SkillDto getSkill(Long id) {
-        Optional<Skill> skill = skillRepository.findById(id);
-        if (skill.isPresent()) {
-            return new SkillDto(skill.get().getSkillId(), skill.get().getName());
-        }
-        throw new ResourceNotFoundException();
+    public SkillDto getSkill(Long id) throws ResourceNotFoundException {
+        Skill skill = skillRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Skill not found"));
+        return new SkillDto(skill.getSkillId(), skill.getName());
     }
 
     @Override
@@ -59,16 +57,24 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public void removeSkill(Long id) throws Exception {
+    public void removeSkill(Long id) throws ResourceNotFoundException {
+        Skill skill = skillRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Skill not found"));
+        try {
+            skillRepository.delete(skill);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while deleting skill", e);
+        }
+    }
+
+    @Override
+    public void putSkill(SkillDto skillDto, Long id) throws Exception {
         Optional<Skill> skill = skillRepository.findById(id);
         if (skill.isPresent()) {
-            try {
-                skillRepository.delete(skill.get());
-            } catch (Exception exception) {
-                throw new Exception("Error while deleting skill " + exception.getMessage());
-            }
+            skill.get().setName(skillDto.getName());
+            skillRepository.save(skill.get());
         } else {
-            throw new ResourceNotFoundException("Resource not found");
+            createSkill(skillDto);
         }
     }
 }

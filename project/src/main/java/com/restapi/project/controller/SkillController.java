@@ -68,13 +68,19 @@ public class SkillController {
             return new ResponseEntity<>("{ \"message\" : \"Skill not found\" } ", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             logger.info(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @RequestMapping(value = "/skills/{ID}", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<String> putSkill(@PathVariable("ID") Long id, @RequestBody SkillDto skillDto) {
-        return null; // TO DO
+        try {
+            skillService.putSkill(skillDto, id);
+            return new ResponseEntity<>("{ \"message\" : \"Method \"PUT\" for skill completed successfully\" } ", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

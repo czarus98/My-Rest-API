@@ -106,4 +106,14 @@ public class CandidateServiceImpl implements CandidateService {
             createCandidate(newCandidate);
         }
     }
+
+    @Override
+    public Candidate findByEmail(String email) {
+        return candidateRepository.findByEmail(email);
+    }
+
+    @Override
+    public void saveCandidate(Candidate candidate) {
+        candidateRepository.save(candidate);
+    }
 }

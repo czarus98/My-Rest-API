@@ -17,4 +17,6 @@ public interface SkillService {
     void createSkill(SkillDto skillDto) throws Exception;
 
     void removeSkill(Long id) throws Exception;
+
+    void putSkill(SkillDto skillDto, Long id) throws Exception;
 }

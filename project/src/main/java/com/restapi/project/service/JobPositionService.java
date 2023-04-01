@@ -14,4 +14,6 @@ public interface JobPositionService {
     void removePosition(Long id);
 
     void replacePosition(JobPositionDto jobPositionDto, Long id) throws Exception;
+
+    void patchPosition(JobPositionDto jobPositionDto, Long id);
 }
