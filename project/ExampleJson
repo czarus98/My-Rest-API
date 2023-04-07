@@ -1,12 +1,10 @@
-POST job position without skill
-
+// POST job position without skill
 {
   "title": "data engineer",
   "description": "we are looking for data engineer"
 }
 
-POST job position with skills
-
+// POST job position with skills
 {
   "title": "data engineer",
   "description": "we are looking for data engineer2",
@@ -20,38 +18,96 @@ POST job position with skills
   ]
 }
 
-//PATCH job position with candidates, without skills
-
+// PATCH job position with candidates, without skills
 {
-"title": "data engineer2",
-"description": "we are looking for data engineer222",
-"candidates": [
-{
-"firstname": "czarek",
-"lastname": "wojcik",
-"title": "data engineer",
-"email": "czaro444"
-},
-{
-"firstname": "czarek",
-"lastname": "wojcik",
-"title": "data engineer",
-"email": "czaro2222"
+  "title": "data engineer2",
+  "description": "we are looking for data engineer222",
+  "candidates": [
+    {
+      "firstname": "czarek",
+      "lastname": "wojcik",
+      "title": "data engineer",
+      "email": "czarek@gmail"
+    },
+    {
+      "firstname": "czarek",
+      "lastname": "wojcik",
+      "title": "data engineer",
+      "email": "czarek2@gmail"
+    }
+  ]
 }
-]
+
+// PATCH job position with skills, without candidates
+{
+  "title": "data engineer2",
+  "description": "we are looking for data engineer222",
+  "skills": [
+    {
+      "name": "data2"
+    },
+    {
+      "name": "data3"
+    }
+  ]
 }
 
-//PATCH job position with skills, without candidates
-
+// PUT job position
 {
-"title": "data engineer2",
-"description": "we are looking for data engineer222",
-"skills": [
-{
-"name": "data2"
-},
-{
-"name": "data3"
+  "title": "data engineer3",
+  "description": "we are looking for data engineer222"
 }
-]
+
+// POST job position with skills
+{
+  "title": "data engineer3",
+  "description": "we are looking for data engineer222",
+  "skills": [
+    {
+      "name": "data2"
+    },
+    {
+      "name": "dataaa"
+    }
+  ]
+}
+
+// POST candidates with skills
+{
+  "title": "data engineer3",
+  "firstname": "czarek",
+  "lastname": "wojcik",
+  "email": "czarek@gmail",
+  "skills" : [
+    {
+      "name": "data"
+    },
+    {
+      "name": "data4"
+    }
+  ]
+}
+
+// PUT candidate new
+{
+  "title": "data engineer4",
+  "firstname": "czarek",
+  "lastname": "wojcik",
+  "email": "test@gmail",
+  "skills" : [
+    {
+      "name": "data"
+    },
+    {
+      "name": "data2"
+    }
+  ]
+}
+
+// PUT existing candidate
+{
+  "title": "data engineer4",
+  "firstname": "czarek",
+  "lastname": "wojcik",
+  "email": "elo elo dd0",
 }

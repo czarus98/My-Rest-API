@@ -18,10 +18,11 @@ import java.util.List;
 public class JobPositionController {
 
     Logger logger = LoggerFactory.getLogger(JobPositionController.class);
+
     @Autowired
     private JobPositionService jobPositionService;
 
-    @RequestMapping(value = "/positions", method = RequestMethod.GET)
+    @RequestMapping(value = "/positions", method = RequestMethod.GET) // TESTED
     @ResponseBody
     public ResponseEntity<List<JobPositionDto>> getAllPositions() {
         try {
@@ -31,7 +32,7 @@ public class JobPositionController {
         }
     }
 
-    @RequestMapping(value = "/positions/{ID}", method = RequestMethod.GET)
+    @RequestMapping(value = "/positions/{ID}", method = RequestMethod.GET) // TESTED
     @ResponseBody
     public ResponseEntity<JobPositionDto> getPosition(@PathVariable("ID") Long id) {
         try {
@@ -42,7 +43,7 @@ public class JobPositionController {
         }
     }
 
-    @RequestMapping(value = "/positions", method = RequestMethod.POST)
+    @RequestMapping(value = "/positions", method = RequestMethod.POST) // TESTED
     @ResponseBody
     public ResponseEntity<String> postPosition(@RequestBody JobPositionDto jobPositionDto) {
         try {
@@ -64,12 +65,11 @@ public class JobPositionController {
             return new ResponseEntity<>("{ \"message\" : \"Job position not found\" } ", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();
-            logger.info(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @RequestMapping(value = "/positions/{ID}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/positions/{ID}", method = RequestMethod.DELETE) // TESTED
     @ResponseBody
     public ResponseEntity<String> deletePosition(@PathVariable("ID") Long id) {
         try {
@@ -81,12 +81,12 @@ public class JobPositionController {
         }
     }
 
-    @RequestMapping(value = "/positions/{ID}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/positions/{ID}", method = RequestMethod.PUT) // TESTED
     @ResponseBody
     public ResponseEntity<String> putPosition(@PathVariable("ID") Long id, @RequestBody JobPositionDto jobPositionDto) {
         try {
             jobPositionService.replacePosition(jobPositionDto, id);
-            return new ResponseEntity<>("{ \"message\" : \"Method \"PUT\" completed successfully\" } ", HttpStatus.OK);
+            return new ResponseEntity<>("{ \"message\" : \"Method \"PUT\" for job position completed successfully\" } ", HttpStatus.OK);
         } catch (Exception e) {
             logger.info(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

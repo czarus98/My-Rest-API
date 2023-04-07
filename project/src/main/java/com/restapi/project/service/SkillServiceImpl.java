@@ -71,6 +71,9 @@ public class SkillServiceImpl implements SkillService {
     public void putSkill(SkillDto skillDto, Long id) throws Exception {
         Optional<Skill> skill = skillRepository.findById(id);
         if (skill.isPresent()) {
+            if (skillRepository.existsByName(skillDto.getName())) {
+                throw new ResourceAlreadyExistsError("Skill " + skillDto.getName() + " already exists");
+            }
             skill.get().setName(skillDto.getName());
             skillRepository.save(skill.get());
         } else {

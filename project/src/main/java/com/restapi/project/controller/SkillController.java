@@ -22,7 +22,7 @@ public class SkillController {
     @Autowired
     private SkillService skillService;
 
-    @RequestMapping(value = "/skills", method = RequestMethod.GET)
+    @RequestMapping(value = "/skills", method = RequestMethod.GET) // TESTED
     @ResponseBody
     public ResponseEntity<List<SkillDto>> getAllSkills() {
         try {
@@ -32,7 +32,7 @@ public class SkillController {
         }
     }
 
-    @RequestMapping(value = "/skills/{ID}", method = RequestMethod.GET)
+    @RequestMapping(value = "/skills/{ID}", method = RequestMethod.GET) // TESTED
     @ResponseBody
     public ResponseEntity<SkillDto> getSkill(@PathVariable("ID") Long id) {
         try {
@@ -43,7 +43,7 @@ public class SkillController {
         }
     }
 
-    @RequestMapping(value = "/skills", method = RequestMethod.POST)
+    @RequestMapping(value = "/skills", method = RequestMethod.POST) // TESTED
     @ResponseBody
     public ResponseEntity<String> postSkill(@RequestBody SkillDto skillDto) {
         try {
@@ -58,7 +58,7 @@ public class SkillController {
         }
     }
 
-    @RequestMapping(value = "/skills/{ID}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/skills/{ID}", method = RequestMethod.DELETE) // TESTED
     @ResponseBody
     public ResponseEntity<String> deleteSkill(@PathVariable("ID") Long id) {
         try {
@@ -72,7 +72,7 @@ public class SkillController {
         }
     }
 
-    @RequestMapping(value = "/skills/{ID}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/skills/{ID}", method = RequestMethod.PUT) // TESTED
     @ResponseBody
     public ResponseEntity<String> putSkill(@PathVariable("ID") Long id, @RequestBody SkillDto skillDto) {
         try {

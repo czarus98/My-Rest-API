@@ -72,10 +72,16 @@ public class JobPositionServiceImpl implements JobPositionService {
         JobPosition jobPosition = jobPositionRepository.findByJobPositionId(id);
         if (jobPosition != null) {
             List<SkillDto> skillsDto = skillService.getAllSkills();
+            List<CandidateDto> candidateDtos = candidateService.getAllCandidates();
             Skill skill;
+            Candidate candidate;
             for (SkillDto skillDto : skillsDto) {
                 skill = skillService.findBySkillName(skillDto.getName());
                 skill.getSkillsNeededForJob().remove(jobPosition);
+            }
+            for (CandidateDto candidateDto : candidateDtos) {
+                candidate = candidateService.findByEmail(candidateDto.getEmail());
+                candidate.getJobPositions().remove(jobPosition);
             }
             jobPositionRepository.delete(jobPosition);
         }

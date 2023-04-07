@@ -20,7 +20,7 @@ public class CandidateController {
     @Autowired
     private CandidateServiceImpl candidateService;
 
-    @RequestMapping(value = "/candidates", method = RequestMethod.GET)
+    @RequestMapping(value = "/candidates", method = RequestMethod.GET) // TESTED
     @ResponseBody
     public ResponseEntity<List<CandidateDto>> getAllCandidates() {
         try {
@@ -30,7 +30,7 @@ public class CandidateController {
         }
     }
 
-    @RequestMapping(value = "/candidates/{ID}", method = RequestMethod.GET)
+    @RequestMapping(value = "/candidates/{ID}", method = RequestMethod.GET) // TESTED
     @ResponseBody
     public ResponseEntity<CandidateDto> getCandidate(@PathVariable("ID") Long id) {
         try {
@@ -41,7 +41,7 @@ public class CandidateController {
         }
     }
 
-    @RequestMapping(value = "/candidates", method = RequestMethod.POST)
+    @RequestMapping(value = "/candidates", method = RequestMethod.POST) // TESTED
     @ResponseBody
     public ResponseEntity<String> createCandidate(@RequestBody CandidateDto candidateDto) {
         try {
@@ -53,7 +53,7 @@ public class CandidateController {
         }
     }
 
-    @RequestMapping(value = "/candidates/{ID}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/candidates/{ID}", method = RequestMethod.PUT) // TESTED
     @ResponseBody
     public ResponseEntity<String> updateCandidate(@PathVariable("ID") Long id, @RequestBody CandidateDto newCandidate) {
         try {
@@ -65,7 +65,7 @@ public class CandidateController {
         }
     }
 
-    @RequestMapping(value = "/candidates/{ID}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/candidates/{ID}", method = RequestMethod.DELETE) // TESTED
     @ResponseBody
     public ResponseEntity<String> deleteCandidate(@PathVariable("ID") Long id) {
         try {

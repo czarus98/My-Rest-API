@@ -40,7 +40,7 @@ public class CandidateServiceImpl implements CandidateService {
         Candidate candidate = candidateRepository.findByCandidateId(id);
         if (candidate != null) {
             return new CandidateDto(candidate.getFirstname(), candidate.getLastname(), candidate.getJobTitle(), candidate.getCandidateId(),
-                    candidate.getSkills().stream().map(skill -> new SkillDto(skill.getName())).collect(Collectors.toList()), candidate.getEmail());
+                    candidate.getSkills().stream().map(skill -> new SkillDto(skill.getSkillId(), skill.getName())).collect(Collectors.toList()), candidate.getEmail());
         }
         throw new ResourceNotFoundException();
     }
